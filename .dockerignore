@@ -1,0 +1,14 @@
+# Ignore the virtual environment
+venv/
+.venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore the local database file
+scraper.db
