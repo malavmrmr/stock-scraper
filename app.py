@@ -9,11 +9,12 @@ import plotly.express as px
 # Add the project root to the Python path to allow imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# --- Direct Imports (No FastAPI needed) ---
+# --- Direct Imports ---
 from scrapers.news_api_scraper import scrape_from_news_api
 from scrapers.fmp_scraper import scrape_from_fmp, get_indian_stocks
 from scrapers.cnbctv18_scraper import scrape_cnbctv18
 from scrapers.google_scraper import scrape_from_google
+# from scrapers.marketaux_scraper import scrape_from_marketaux # <-- REMOVED
 from scrapers.finnhub_scraper import scrape_from_finnhub
 from database import init_db, add_headline, get_headlines, get_sentiment_over_time
 from services.sentiment import analyze_sentiment
@@ -47,7 +48,10 @@ ticker_input = st.text_input("Enter a stock ticker (or select from sidebar):", s
 
 col2, col3, col4 = st.columns([1, 1, 1])
 with col2:
-    source = st.selectbox("Select news source:", ("newsapi", "google", "marketaux", "finnhub", "fmp", "cnbctv18"))
+    source = st.selectbox(
+        "Select news source:",
+        ("newsapi", "google", "finnhub", "fmp", "cnbctv18") # <-- REMOVED 'marketaux'
+    )
 with col3:
     from_date = st.date_input("Start Date", date.today() - timedelta(days=30))
 with col4:
@@ -66,7 +70,8 @@ with st.form("scrape_form"):
                 scraper_map = {
                     'google': scrape_from_google, 'newsapi': scrape_from_news_api,
                     'fmp': scrape_from_fmp, 'cnbctv18': scrape_cnbctv18,
-                     'finnhub': scrape_from_finnhub
+                    'finnhub': scrape_from_finnhub
+                    # <-- REMOVED 'marketaux'
                 }
                 scraper_function = scraper_map.get(source)
                 if scraper_function:
@@ -89,7 +94,6 @@ with st.form("scrape_form"):
 # --- Display Results Section ---
 st.header(f"Analysis for {ticker_to_scrape}")
 
-# --- Get data directly from the database ---
 results_data = get_headlines(ticker_to_scrape)
 sentiment_data = get_sentiment_over_time(ticker_to_scrape)
 
