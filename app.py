@@ -77,7 +77,7 @@ daemon.start()
 time.sleep(5)
 
 # --- NEW: HEADER SECTION ---
-st.title("📈 Stock Market News Scraper & Analyzer")
+st.title("📈 Stock Market News Scraper & Analyzer for VIshal and Maulik")
 st.markdown("This application fetches the latest news for a selected stock, analyzes the sentiment of each headline, and displays the results in a table and chart.")
 
 with st.sidebar:
@@ -168,5 +168,5 @@ except requests.ConnectionError:
 
 # --- NEW: FOOTER SECTION ---
 st.markdown("---")
-st.markdown("Developed by [Malav Raval] | Powered by Streamlit & FastAPI")
+st.markdown("Developed by Malav Raval")
 st.markdown("Data sourced from NewsAPI.org, FinancialModelingPrep, and others.")
