@@ -77,7 +77,7 @@ daemon.start()
 time.sleep(5)
 
 # --- NEW: HEADER SECTION ---
-st.title("📈 Stock Market News Scraper & Analyzer for VIshal and Maulik")
+st.title("📈 Stock Market News Scraper & Analyzer for Vishal and Maulik")
 st.markdown("This application fetches the latest news for a selected stock, analyzes the sentiment of each headline, and displays the results in a table and chart.")
 
 with st.sidebar:
