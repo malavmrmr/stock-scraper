@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from scrapers.fmp_scraper import get_indian_stocks
 
-st.set_page_config(page_title="Stock Market Scraper", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Stock Market Scraper by Malav", page_icon="📈", layout="wide")
 API_URL = "http://127.0.0.1:8000"
 
 if 'ticker' not in st.session_state:
