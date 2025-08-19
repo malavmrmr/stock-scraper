@@ -66,7 +66,7 @@ with st.form("scrape_form"):
                 scraper_map = {
                     'google': scrape_from_google, 'newsapi': scrape_from_news_api,
                     'fmp': scrape_from_fmp, 'cnbctv18': scrape_cnbctv18,
-                    'finnhub': scrape_from_finnhub
+                     'finnhub': scrape_from_finnhub
                 }
                 scraper_function = scraper_map.get(source)
                 if scraper_function:
