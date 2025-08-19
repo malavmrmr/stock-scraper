@@ -1,24 +1,25 @@
 import requests
+from datetime import datetime
 
-# --- PASTE YOUR MARKETAUX API TOKEN HERE ---
-API_TOKEN = "JLChCy3VZzaVfRHpGO4n5zCof3OSaOb65EaVWsnk"
+# --- PASTE YOUR FINNHUB API KEY HERE ---
+API_KEY = "d2i6hspr01qucbnndnsgd2i6hspr01qucbnndnt0"
 
-def scrape_from_marketaux(ticker: str, from_date: str, to_date: str):
+def scrape_from_finnhub(ticker: str, from_date: str, to_date: str):
     """
-    Fetches news for a ticker from the MarketAux API.
+    Fetches company news for a ticker from the Finnhub API.
     """
-    if "PASTE" in API_TOKEN:
-        print("ERROR: MarketAux API token is not set.")
+    if "PASTE" in API_KEY:
+        print("ERROR: Finnhub API key is not set.")
         return []
 
-    # The MarketAux API endpoint for all news
-    url = "https://api.marketaux.com/v1/news/all"
+    # The Finnhub API endpoint for company news
+    url = "https://finnhub.io/api/v1/company-news"
 
     params = {
-        "api_token": API_TOKEN,
-        "symbols": ticker,
-        "language": "en",
-        "limit": 50 # The free plan might have a lower limit
+        "symbol": ticker,
+        "from": from_date,
+        "to": to_date,
+        "token": API_KEY
     }
 
     articles = []
@@ -27,19 +28,18 @@ def scrape_from_marketaux(ticker: str, from_date: str, to_date: str):
         response.raise_for_status()
         data = response.json()
 
-        # The articles are in the 'data' key
-        for article in data.get("data", []):
+        # The response is a list of articles
+        for article in data:
+            # Convert timestamp to a readable date
+            published_date = datetime.fromtimestamp(article.get('datetime')).strftime('%Y-%m-%d')
+
             articles.append({
-                'title': article.get('title'),
+                'title': article.get('headline'),
                 'url': article.get('url'),
-                'published_at': article.get('published_at', '').split('T')[0]
+                'published_at': published_date
             })
     except requests.RequestException as e:
-        print(f"Error fetching from MarketAux API: {e}")
-        try:
-            print(f"API Error Response: {response.json()}")
-        except:
-            pass
+        print(f"Error fetching from Finnhub API: {e}")
         return []
 
     return articles
