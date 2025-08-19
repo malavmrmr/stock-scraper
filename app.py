@@ -23,7 +23,7 @@ from scrapers.news_api_scraper import scrape_from_news_api
 from scrapers.fmp_scraper import scrape_from_fmp, get_indian_stocks
 from scrapers.cnbctv18_scraper import scrape_cnbctv18
 from scrapers.google_scraper import scrape_from_google
-from scrapers.marketaux_scraper import scrape_from_marketaux
+from scrapers.finnhub_scraper import scrape_from_marketaux
 from scrapers.finnhub_scraper import scrape_from_finnhub
 from database import init_db, add_headline, get_headlines, get_sentiment_over_time
 from services.sentiment import analyze_sentiment
