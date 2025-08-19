@@ -13,7 +13,7 @@ def init_db():
                 ticker TEXT NOT NULL,
                 headline TEXT NOT NULL,
                 source_url TEXT NOT NULL,
-                published_at TEXT, -- NEW COLUMN
+                published_at TEXT,
                 sentiment_score REAL NOT NULL,
                 scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
@@ -38,20 +38,21 @@ def get_headlines(ticker: str):
             (ticker,)
         )
         return [{"headline": row[0], "source_url": row[1], "published_at": row[2], "sentiment_score": row[3]} for row in cursor.fetchall()]
-    
-    def get_sentiment_over_time(ticker: str):
+
+# --- THIS FUNCTION WAS MOVED TO THE CORRECT INDENTATION LEVEL ---
+def get_sentiment_over_time(ticker: str):
+    """
+    Retrieves and averages sentiment scores by date for a given ticker.
+    """
+    with closing(sqlite3.connect(DATABASE)) as db:
+        query = """
+            SELECT
+                date(published_at) as day,
+                AVG(sentiment_score) as avg_sentiment
+            FROM headlines
+            WHERE ticker = ? AND published_at IS NOT NULL
+            GROUP BY day
+            ORDER BY day ASC;
         """
-        Retrieves and averages sentiment scores by date for a given ticker.
-        """
-        with closing(sqlite3.connect(DATABASE)) as db:
-            query = """
-                SELECT
-                    date(published_at) as day,
-                    AVG(sentiment_score) as avg_sentiment
-                FROM headlines
-                WHERE ticker = ? AND published_at IS NOT NULL
-                GROUP BY day
-                ORDER BY day ASC;
-            """
-            cursor = db.execute(query, (ticker,))
-            return [{"day": row[0], "avg_sentiment": row[1]} for row in cursor.fetchall()]
+        cursor = db.execute(query, (ticker,))
+        return [{"day": row[0], "avg_sentiment": row[1]} for row in cursor.fetchall()]
