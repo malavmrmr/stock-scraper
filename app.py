@@ -138,5 +138,5 @@ else:
 
 # --- Footer ---
 st.markdown("---")
-st.markdown("Developed by Malav | Follow on X: [@YourXHandle](https://x.com/YourXHandle)")
+st.markdown("Developed by Malav | Follow on X: [@malavmrmr](https://x.com/malavmrmr)")
 st.markdown("Powered by Streamlit | Data sourced from various APIs.")
