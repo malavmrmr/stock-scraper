@@ -25,7 +25,7 @@ with st.sidebar:
     else:
         st.warning("Could not fetch stock list. Check FMP API key.")
 
-st.title("📈 Stock Market News Scraper & Analyzer")
+st.title("📈 Stock Market News Scraper & Analyzer For Vishal and Maulik")
 
 ticker_input = st.text_input("Enter a stock ticker (or select from sidebar):", st.session_state.ticker).upper()
 
